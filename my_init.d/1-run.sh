@@ -52,3 +52,6 @@ echo ">> Crontab added"
 
 echo ">> Your git path is /home/alpha/mirrors"
 echo ">> Your git URL is alpha@$TORAN_HOST:mirrors/ (Customize for your published port if not 22)"
+
+# fix permissions for app assets
+chmod -R 777 /var/www/toran/app/cache
