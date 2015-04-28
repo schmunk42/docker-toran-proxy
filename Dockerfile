@@ -29,7 +29,15 @@ RUN chown -R alpha:alpha /home/alpha
 RUN rm -f /etc/service/sshd/down
 
 # Install
-RUN apt-get -y install software-properties-common nginx php5-mysql php-apc curl unzip php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl mysql-client php5-fpm php5-cli
+RUN apt-get -y install \
+    software-properties-common \
+    git \
+    mercurial \
+    nginx \
+    mysql-client \
+    php5-mysql php-apc curl unzip php5-curl php5-gd php5-intl php-pear php5-imagick \
+    php5-imap php5-mcrypt php5-memcache php5-ps php5-pspell php5-recode php5-sqlite \
+    php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-cli
 
 # nginx site conf
 ADD etc/nginx/nginx.conf /etc/nginx/nginx.conf
