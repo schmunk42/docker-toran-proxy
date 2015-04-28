@@ -16,28 +16,27 @@ ENV PUB_KEY **NULL**
 RUN apt-add-repository ppa:nginx/stable -y
 RUN export LANG=C.UTF-8; apt-add-repository ppa:ondrej/php5-5.6 -y
 
-RUN apt-get update
-RUN apt-get -y upgrade
 
 # Add static user to keep UIDs in sync
 RUN groupadd -r alpha \
   && useradd -r -g alpha -G sudo alpha
 
-RUN mkdir -p /home/alpha/.ssh
-RUN chown -R alpha:alpha /home/alpha
-
-RUN rm -f /etc/service/sshd/down
+RUN mkdir -p /home/alpha/.ssh && \
+    chown -R alpha:alpha /home/alpha && \
+    rm -f /etc/service/sshd/down
 
 # Install
-RUN apt-get -y install \
-    software-properties-common \
-    git \
-    mercurial \
-    nginx \
-    mysql-client \
-    php5-mysql php-apc curl unzip php5-curl php5-gd php5-intl php-pear php5-imagick \
-    php5-imap php5-mcrypt php5-memcache php5-ps php5-pspell php5-recode php5-sqlite \
-    php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-cli
+RUN apt-get update && \
+    apt-get -y install \
+        software-properties-common \
+        git \
+        mercurial \
+        nginx \
+        mysql-client \
+        php5-mysql php-apc curl unzip php5-curl php5-gd php5-intl php-pear php5-imagick \
+        php5-imap php5-mcrypt php5-memcache php5-ps php5-pspell php5-recode php5-sqlite \
+        php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-cli && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # nginx site conf
 ADD etc/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -59,14 +58,12 @@ ADD my_init.d/1-run.sh /etc/my_init.d/1-run.sh
 
 RUN chmod 755 /etc/my_init.d/*.sh /etc/service/php5-fpm/run /etc/service/nginx/run
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Install Toran Proxy
-RUN rm -Rf /var/www/html
-RUN curl -O https://toranproxy.com/releases/toran-proxy-v1.1.6.tgz && tar zxvf toran-proxy-v1.1.6.tgz -C /var/www && rm toran-proxy-v1.1.6.tgz
-RUN cp /var/www/toran/app/config/parameters.yml.dist /var/www/toran/app/config/parameters.yml
+RUN rm -Rf /var/www/html && \
+    curl -O https://toranproxy.com/releases/toran-proxy-v1.1.6.tgz && tar zxvf toran-proxy-v1.1.6.tgz -C /var/www && rm toran-proxy-v1.1.6.tgz  && \
+    cp /var/www/toran/app/config/parameters.yml.dist /var/www/toran/app/config/parameters.yml && \
+    chown -R alpha:alpha /var/www/*
 ADD toran/composer/auth.json /var/www/toran/app/toran/composer/auth.json
-RUN chown -R alpha:alpha /var/www/*
 
 RUN mkdir /home/alpha/mirrors && chown alpha:alpha /home/alpha/mirrors
 
