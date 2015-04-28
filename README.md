@@ -22,3 +22,13 @@ TORAN_HOST | Hostname | **ChangeMe**
 TORAN_BASE_URL | Base URL | **NULL**
 GITHUB_OAUTH | Github OAuth | **ChangeMe**
 PUB_KEY | Public key for Alpha user | **NULL**
+
+### Usage
+Run a container from the image
+
+    docker run \
+        -e TORAN_HOST=docker.local \
+        -e SECRET=secret \
+        -e GITHUB_OAUTH=1ab2c \
+        -p 80 \
+        schmunk42/toran-proxy
