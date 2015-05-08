@@ -70,7 +70,7 @@ RUN mkdir -p /var/www/toran/app/toran/cache/ && \
     chmod -R 777 /var/www/toran/app/toran/cache/
 
 # Define mountable directories.
-VOLUME ["/var/log"]
+VOLUME ["/var/log","/var/www/toran/app/cache","/var/www/toran/app/toran/cache"]
 
 # private expose
 EXPOSE 80 443 22
