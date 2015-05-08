@@ -66,6 +66,8 @@ RUN rm -Rf /var/www/html && \
 ADD toran/composer/auth.json /var/www/toran/app/toran/composer/auth.json
 
 RUN mkdir /home/alpha/mirrors && chown alpha:alpha /home/alpha/mirrors
+RUN mkdir -p /var/www/toran/app/toran/cache/ && \
+    chmod -R 777 /var/www/toran/app/toran/cache/
 
 # Define mountable directories.
 VOLUME ["/var/log"]
