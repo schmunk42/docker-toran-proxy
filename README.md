@@ -1,6 +1,7 @@
 # PrimeTime Toran Proxy Docker Image
 
 ### Features
+
 - non-priviliged user (alpha)
 - environment based configuration
 - ssh for git proxy
@@ -23,7 +24,9 @@ TORAN_BASE_URL | Base URL | **NULL**
 GITHUB_OAUTH | Github OAuth | **ChangeMe**
 PUB_KEY | Public key for Alpha user | **NULL**
 
+
 ### Usage
+
 Run a container from the image
 
     docker run \
@@ -32,3 +35,30 @@ Run a container from the image
         -e GITHUB_OAUTH=1ab2c \
         -p 80 \
         schmunk42/toran-proxy
+
+        
+### docker-compose
+        
+Mount `defaults.yml`
+
+    toran:
+      image: schmunk42/toran-proxy:1.4.0
+      environment:
+        VIRTUAL_HOST: toran.example.com
+        TORAN_HOST: toran.example.com
+        CERT_NAME: default
+        TORAN_SCHEME: https
+        SECRET: <INSERT_SECRET>_
+        GITHUB_OAUTH: <YOUR_TOKEN>
+      ports:
+        - '8380:80'
+      restart: always
+      volumes:
+        - ./custom/init.sh:/root/init.sh
+        - ./custom/auth.json:/var/www/toran/app/toran/composer/auth.json
+        - ./custom/config.yml:/var/www/toran/app/toran/config.yml
+        - ./custom/defaults.yml:/var/www/toran/app/config/defaults.yml
+        - ./persist/toran/mirrors:/home/alpha/mirrors
+        - ./persist/toran/app/cache:/var/www/toran/app/cache
+        - ./persist/toran/cache:/var/www/toran/app/toran/cache
+      command: bash /root/init.sh
