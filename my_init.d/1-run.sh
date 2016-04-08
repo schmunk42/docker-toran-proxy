@@ -47,7 +47,7 @@ echo ">> Your set password is $RAND_PASS"
 sed -i "s/.*github.com.*/        \"github.com\": \"$GITHUB_OAUTH\"/g" /var/www/toran/app/toran/composer/auth.json
 echo ">> Github Token has been saved"
 
-/sbin/setuser alpha crontab -l | { cat; echo "* * * * * cd /var/www/toran && chmod -R 777 app/toran/cache && php bin/cron >/dev/null 2>&1"; } | /sbin/setuser alpha crontab -
+/sbin/setuser alpha crontab -l | { cat; echo "* * * * * cd /var/www/toran && php bin/cron >/dev/null 2>&1"; } | /sbin/setuser alpha crontab -
 echo ">> Crontab added"
 
 echo ">> Your git path is /home/alpha/mirrors"
