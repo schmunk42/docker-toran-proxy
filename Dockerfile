@@ -60,7 +60,9 @@ RUN chmod 755 /etc/my_init.d/*.sh /etc/service/php5-fpm/run /etc/service/nginx/r
 
 # Install Toran Proxy
 RUN rm -Rf /var/www/html && \
-    curl -O https://toranproxy.com/releases/toran-proxy-v1.4.0.tgz && tar zxvf toran-proxy-v1.4.0.tgz -C /var/www && rm toran-proxy-v1.4.0.tgz  && \
+    curl -O https://toranproxy.com/releases/toran-proxy-v1.5.3.tgz && \
+    tar zxvf toran-proxy-v1.5.3.tgz -C /var/www && \
+    rm toran-proxy-v1.5.3.tgz  && \
     cp /var/www/toran/app/config/parameters.yml.dist /var/www/toran/app/config/parameters.yml && \
     chown -R alpha:alpha /var/www/*
 ADD toran/composer/auth.json /var/www/toran/app/toran/composer/auth.json
