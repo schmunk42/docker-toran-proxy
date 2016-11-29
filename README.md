@@ -1,5 +1,8 @@
 # PrimeTime Toran Proxy Docker Image
 
+:whale: https://hub.docker.com/r/schmunk42/toran-proxy/
+:octocat: https://github.com/schmunk42/docker-toran-proxy
+
 ### Features
 
 - non-priviliged user (alpha)
